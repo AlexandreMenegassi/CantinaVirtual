@@ -1,0 +1,10 @@
+<resources>
+    <!-- Name App -->
+    <string name="app_name">CantinaVirtual</string>
+
+    <!-- Main Activity Bottom Navigation -->
+    <string name="title_clientes">Clientes</string>
+    <string name="title_produtos">Produtos</string>
+    <string name="title_vendas">Vendas</string>
+
+</resources>
