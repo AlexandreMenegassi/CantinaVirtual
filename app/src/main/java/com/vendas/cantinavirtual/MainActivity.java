@@ -1,5 +1,6 @@
 package com.vendas.cantinavirtual;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,8 @@ import com.vendas.cantinavirtual.fragments.ProdutosFragment;
 import com.vendas.cantinavirtual.fragments.VendasFragment;
 
 import static com.vendas.cantinavirtual.R.id.fragment_container;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private SQLiteDatabase bancoDados;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,33 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        try{
+
+            bancoDados = openOrCreateDatabase("CantinaVirtual", MODE_PRIVATE, null);
+
+            //TABELA CLIENTE
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS cliente(idCliente INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "nome varchar, telefone varchar, saldo real)");
+
+            //TABELA PRODUTO
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS produto(idProduto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "nome varchar, categoria varchar, preco real)");
+
+            //TABELA VENDA
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS venda(idVenda INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "idCliente int, dataVenda date, FOREIGN KEY(idCliente) REFERENCES cliente(idCliente))");
+
+            //TABELA VENDAPRODUTO
+            bancoDados.execSQL("CREATE TABLE IF NOT EXISTS vendaProduto(idVendaProduto INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "idVenda int, idProduto int, quantidade int, valor real," +
+                    "FOREIGN KEY(idVenda) REFERENCES venda(idVenda)," +
+                    "FOREIGN KEY(idProduto) REFERENCES produto(idProduto))");
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void addFragment(Class fragmentClass) {
