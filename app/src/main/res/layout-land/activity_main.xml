@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-z
+
     <fragment
         android:id="@+id/fragment_container"
         android:name="com.vendas.cantinavirtual.fragments.ClienteFragment"

@@ -1,6 +1,6 @@
 <resources>
     <!-- Name App -->
-    <string name="app_name">CantinaVirtual</string>
+    <string name="app_name">Cantina Virtual</string>
 
     <!-- Main Activity Bottom Navigation -->
     <string name="title_clientes">Clientes</string>

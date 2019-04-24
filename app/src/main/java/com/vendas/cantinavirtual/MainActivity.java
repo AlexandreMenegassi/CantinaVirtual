@@ -24,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    addFragment(0);
+                    addFragment(ClienteFragment.class);
                     return true;
                 case R.id.navigation_dashboard:
-                    addFragment(1);
+                    addFragment(ProdutosFragment.class);
                     return true;
                 case R.id.navigation_notifications:
-                    addFragment(2);
+                    addFragment(VendasFragment.class);
                     return true;
             }
             return false;
@@ -46,19 +46,8 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public void addFragment(int i){
-
+    public void addFragment(Class fragmentClass) {
         Fragment fragment = null;
-        Class fragmentClass = null;
-
-        if (i == 0) {
-            fragmentClass = ClienteFragment.class;
-        } else if (i == 1) {
-            fragmentClass = ProdutosFragment.class;
-        } else if (i == 2) {
-            fragmentClass = VendasFragment.class;
-        }
-
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (IllegalAccessException e) {
@@ -66,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(fragment_container, fragment).commit();
+        fragmentManager.beginTransaction().add(fragment_container, fragment).commit();
     }
 }
